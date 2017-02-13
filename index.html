@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Very Simple To Do List</title>
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css" />
+    <!-- endbower -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="/app/styles/styles.css">
+    <!-- endinject -->
+</head>
+
+<body>
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
+    <!-- endbower -->
+    <h1>Welcome to the To Do App!</h1>
+    <div ng-controller="MainController as vm">
+        <div class="form-horizontal">
+            <fieldset>
+                <!-- Form Name -->
+                <legend>Form Name</legend>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="textinput">Text Input</label>
+                    <div class="col-md-4">
+                        <input id="textinput" name="textinput" type="text" placeholder="placeholder" class="form-control input-md" ng-model="vm.toDoItem">
+                        <span class="help-block">help</span>
+                    </div>
+                </div>
+                <!-- Select Basic -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="selectbasic">Select Basic</label>
+                    <div class="col-md-4">
+                        <select id="selectbasic" name="selectbasic" class="form-control" ng-model="vm.priority">
+                            <!--  <option value="1 ">High</option>
+                            <option value="2 ">Medium</option>
+                            <option value="3">Low</option> -->
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Button -->
+                <div class="form-group ">
+                    <label class="col-md-4 control-label " for="singlebutton ">Single Button</label>
+                    <div class="col-md-4 ">
+                        <button id="singlebutton " name="singlebutton " class="btn btn-primary " ng-click="vm.postItems()">Add to List!</button>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="toDoList container ">
+            <div class="sortButtons container">
+                <button ng-click="vm.sortByType = 'text' ">Sort By Name</button>
+                <button ng-click="vm.sortByType = 'priorityLevel'">Sort By High Priority</button>
+                <button ng-click="vm.sortByType = '-priorityLevel'">Sort By Low Priority</button>
+            </div>
+            <div class="toDoListTable ">
+                <table class="table table-bordered container ">
+                    <tr>
+                        <th>To Do Item</th>
+                        <th>Priority number</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tr ng-repeat="item in vm.toDoList | orderBy:vm.sortByType" ng-class="vm.chooseClass(item)">
+                        <td>
+                            <span ng-click="editing = true" ng-hide="editing">{{item.text}}</span>
+                            <input type="text" ng-show="editing" ng-model="item.text">
+                        </td>
+                        <td>
+                            <span ng-click="editing = true" ng-hide="editing">{{item.priorityLevel}}</span>
+                            <span ng-show="editing">
+                                <input type="radio" ng-model="item.priorityLevel" value="Low" > Low</input>
+                                <input type="radio" ng-model="item.priorityLevel" value="Medium" > Medium</input>
+                                <input type="radio" ng-model="item.priorityLevel" value="High" > High</input>
+                            </span>
+                        </td>
+                        <td>
+                            <button ng-click="vm.deleteItem(item.toDoEntryId)">Delete</button>
+                            <button ng-hide="editing" ng-click="editing=!editing">Edit</button>
+                            <button ng-show="editing" ng-click="editing=!editing; vm.updateItem(item.toDoEntryId,item)">Save</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- inject:js -->
+    <script src="/app/app.js"></script>
+    <script src="/app/vstda.controller.js"></script>
+    <script src="/app/vstda.factory.js"></script>
+    <!-- endinject -->
+</body>
+
+</html>
