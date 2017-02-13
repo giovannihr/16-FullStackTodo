@@ -208,5 +208,5 @@ paket-files/
 # CodeRush
 .cr/
 ## These are the ignores for the angular app
-VSTDA/bower_components/
-VSTDA/node_modules/
+16-FullStackTodo/VSTDA/bower_components/
+16-FullStackTodo/VSTDA/node_modules/
